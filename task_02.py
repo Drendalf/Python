@@ -1,11 +1,14 @@
-def thesaurus(*args):
-    dic_1 = {}
-    for i in args:
-        f = i[0]
-        if f not in dic_1:
-            dic_1[f] = []
-        dic_1[f].append(i)
-    return dic_1
+import json
+import os
 
+root = os.path.dirname(__file__)
 
-print(thesaurus("иван", "игорь", "илья", "елена"))
+with open("config.json", "r", encoding="utf-8") as f:
+    conf = json.load(f)
+
+for dir_path in conf:
+    ful = os.path.join(root, dir_path)
+    os.makedirs(ful, exist_ok=True)
+    for file in conf[dir_path]:
+        with open(os.path.join(ful, file), "x", encoding="utf-8"):
+            pass
